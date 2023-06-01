@@ -14,6 +14,8 @@ const Demo = () => {
 
   const [copied, setCopied] = useState("");
 
+  const [copiedSummary, setCopiedSummary] = useState("");
+
   useEffect(() => {
     const articlesFromLocalStorage = JSON.parse(
       localStorage.getItem("articles")
@@ -40,6 +42,14 @@ const Demo = () => {
   const handleCopy = (copyUrl) => {
     setCopied(copyUrl);
     navigator.clipboard.writeText(copyUrl);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+  };
+
+  const handleCopySummary = (copySummary) => {
+    setCopiedSummary(copySummary);
+    navigator.clipboard.writeText(copySummary);
     setTimeout(() => {
       setCopied(false);
     }, 3000);
@@ -114,7 +124,20 @@ const Demo = () => {
               <h2 className="font-satoshi font-bold text-gray-600 text-xl">
                 Article <span className="blue_gradient">Summary</span>
               </h2>
-              <div className="summary_box">
+
+              <div className="summary_box ">
+                {/* copy boton del resumen */}
+
+                <div
+                  className="copy_btn mb-4"
+                  onClick={() => handleCopySummary(article.summary)}
+                >
+                  <img
+                    src={copiedSummary === article.summary ? tick : copy}
+                    alt="copy_summary"
+                    className="w-[40%] h-[40%] object-contain "
+                  />
+                </div>
                 <p className="font-inter font-medium text-sm text-gray-700">
                   {article.summary}
                 </p>
